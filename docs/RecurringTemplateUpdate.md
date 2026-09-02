@@ -1,0 +1,19 @@
+# RecurringTemplateUpdate
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**endDate** | **string** |  | [optional] [default to null]
+**executionInterval** | **string** |  | [optional] [default to null]
+**executionStatus** | [**ExecutionStatus**](ExecutionStatus.md) |  | [optional] [default to null]
+**finalize** | **boolean** |  | [optional] [default to null]
+**lastExecutedAt** | **string** |  | [optional] [default to null]
+**name** | **string** |  | [optional] [default to null]
+**nextExecutionAt** | **string** |  | [optional] [default to null]
+**startDate** | **string** |  | [optional] [default to null]
+**templateType** | [**RecurringTemplateType**](RecurringTemplateType.md) |  | [optional] [default to null]
+**voucherData** | [**AnyType**](.md) |  | [optional] [default to null]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

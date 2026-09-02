@@ -1,0 +1,52 @@
+# Product
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**availability** | **string** |  | [optional] [default to null]
+**barcode** | **string** |  | [optional] [default to null]
+**brand** | **string** |  | [optional] [default to null]
+**categoryId** | **string** |  | [optional] [default to null]
+**condition** | **string** |  | [optional] [default to null]
+**defaultLedgerAccount** | **string** |  | [optional] [default to null]
+**defaultPrice** | **string** |  | [optional] [default to null]
+**defaultPriceFormulaId** | **string** |  | [optional] [default to null]
+**defaultTaxRate** | **string** |  | [optional] [default to null]
+**description** | **string** |  | [optional] [default to null]
+**gtin** | **string** |  | [optional] [default to null]
+**height** | **string** |  | [optional] [default to null]
+**imageLink** | **string** |  | [optional] [default to null]
+**images** | [**AnyType**](.md) |  | [optional] [default to null]
+**isTaxable** | **boolean** |  | [optional] [default to null]
+**length** | **string** |  | [optional] [default to null]
+**link** | **string** |  | [optional] [default to null]
+**maxStock** | **integer** |  | [optional] [default to null]
+**minStock** | **integer** |  | [optional] [default to null]
+**mpn** | **string** |  | [optional] [default to null]
+**name** | **string** |  | [default to null]
+**packageHeight** | **string** |  | [optional] [default to null]
+**packageLength** | **string** |  | [optional] [default to null]
+**packageWeightUnit** | **string** |  | [optional] [default to null]
+**packageWeightValue** | **string** |  | [optional] [default to null]
+**packageWidth** | **string** |  | [optional] [default to null]
+**productCode** | **string** |  | [default to null]
+**productType** | **string** |  | [optional] [default to null]
+**purchasePrice** | **string** |  | [optional] [default to null]
+**reorderQuantity** | **integer** |  | [optional] [default to null]
+**salePrice** | **string** |  | [optional] [default to null]
+**shippingPrice** | **string** |  | [optional] [default to null]
+**shippingRequiresInsurance** | **boolean** |  | [optional] [default to null]
+**sku** | **string** |  | [default to null]
+**stockQuantity** | **integer** |  | [optional] [default to null]
+**tags** | [**AnyType**](.md) |  | [optional] [default to null]
+**taxPrice** | **string** |  | [optional] [default to null]
+**trackBatch** | **boolean** |  | [optional] [default to null]
+**trackSerial** | **boolean** |  | [optional] [default to null]
+**unit** | [**AnyType**](.md) |  | [optional] [default to null]
+**weightUnit** | **string** |  | [optional] [default to null]
+**weightValue** | **string** |  | [optional] [default to null]
+**width** | **string** |  | [optional] [default to null]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

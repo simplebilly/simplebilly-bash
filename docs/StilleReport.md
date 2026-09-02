@@ -1,0 +1,12 @@
+# StilleReport
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**jahresueberschuss** | **string** |  | [default to null]
+**partners** | [**array[StillePartnerZeile]**](StillePartnerZeile.md) |  | [default to null]
+**year** | **integer** |  | [default to null]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

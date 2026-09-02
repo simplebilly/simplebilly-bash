@@ -1,0 +1,1549 @@
+#  completion                               -*- shell-script -*-
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !
+# ! Note:
+# !
+# ! THIS SCRIPT HAS BEEN AUTOMATICALLY GENERATED USING
+# ! openapi-generator (https://openapi-generator.tech)
+# ! FROM OPENAPI SPECIFICATION IN JSON.
+# !
+# ! Generator version: 7.25.0
+# !
+# !
+# ! System wide installation:
+# !
+# ! $ sudo cp .bash-completion /etc/bash-completion.d/
+# !
+# !
+# ! User home installation (add this line to .bash_profile):
+# !
+# ! [ -r ~/.bash-completion ] && source ~/.bash-completion
+# !
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+declare -A mime_type_abbreviations
+# text/*
+mime_type_abbreviations["text"]="text/plain"
+mime_type_abbreviations["html"]="text/html"
+mime_type_abbreviations["md"]="text/x-markdown"
+mime_type_abbreviations["csv"]="text/csv"
+mime_type_abbreviations["css"]="text/css"
+mime_type_abbreviations["rtf"]="text/rtf"
+# application/*
+mime_type_abbreviations["json"]="application/json"
+mime_type_abbreviations["xml"]="application/xml"
+mime_type_abbreviations["yaml"]="application/yaml"
+mime_type_abbreviations["js"]="application/javascript"
+mime_type_abbreviations["bin"]="application/octet-stream"
+mime_type_abbreviations["rdf"]="application/rdf+xml"
+# image/*
+mime_type_abbreviations["jpg"]="image/jpeg"
+mime_type_abbreviations["png"]="image/png"
+mime_type_abbreviations["gif"]="image/gif"
+mime_type_abbreviations["bmp"]="image/bmp"
+mime_type_abbreviations["tiff"]="image/tiff"
+
+
+#
+# Check if this is OSX, if so defined custom init_completion
+#
+if [[ `uname` =~ "Darwin" ]]; then
+    __osx_init_completion()
+    {
+        COMPREPLY=()
+        _get_comp_words_by_ref cur prev words cword
+    }
+fi
+
+_()
+{
+    local cur
+    local prev
+    local words
+    local cword
+
+    # The reference of currently selected REST operation
+    local operation=""
+
+    # The list of available operation in the REST service
+    # It's modelled as an associative array for efficient key lookup
+    declare -A operations
+    operations["createAbsence"]=1
+    operations["deleteAbsence"]=1
+    operations["getAbsence"]=1
+    operations["getAbsences"]=1
+    operations["updateAbsence"]=1
+    operations["createActivity"]=1
+    operations["deleteActivity"]=1
+    operations["getActivity"]=1
+    operations["listActivities"]=1
+    operations["updateActivity"]=1
+    operations["updateActivityStatus"]=1
+    operations["triggerMirror"]=1
+    operations["aiSuggestApi"]=1
+    operations["createWorkerApi"]=1
+    operations["listWorkersApi"]=1
+    operations["runWorkerApi"]=1
+    operations["eksApi"]=1
+    operations["anlageGApi"]=1
+    operations["anlageSApi"]=1
+    operations["attachmentRestore"]=1
+    operations["createAttachment"]=1
+    operations["deleteAttachment"]=1
+    operations["getAttachment"]=1
+    operations["listAttachments"]=1
+    operations["saveAttachmentOcrText"]=1
+    operations["createAttachmentVersion"]=1
+    operations["listAttachmentVersions"]=1
+    operations["restoreAttachmentVersion"]=1
+    operations["acceptInvite"]=1
+    operations["forgotPassword"]=1
+    operations["login"]=1
+    operations["logout"]=1
+    operations["magicLinkLogin"]=1
+    operations["magicLinkVerify"]=1
+    operations["register"]=1
+    operations["resetPassword"]=1
+    operations["totpEnable"]=1
+    operations["totpSetup"]=1
+    operations["verifyEmail"]=1
+    operations["listAutomations"]=1
+    operations["triggerAutomation"]=1
+    operations["updateAutomation"]=1
+    operations["bankLookupApi"]=1
+    operations["bankTransactionsApi"]=1
+    operations["hebesatzLookupApi"]=1
+    operations["getPlans"]=1
+    operations["getQuotaApi"]=1
+    operations["getSubscriptionApi"]=1
+    operations["getUsageApi"]=1
+    operations["paddleSubscriptionWebhook"]=1
+    operations["putQuotaApi"]=1
+    operations["createBom"]=1
+    operations["deleteBom"]=1
+    operations["getBom"]=1
+    operations["listBoms"]=1
+    operations["updateBom"]=1
+    operations["allocatePaymentApi"]=1
+    operations["bwaReportApi"]=1
+    operations["elsterStatusApi"]=1
+    operations["elsterValidateApi"]=1
+    operations["elsterXmlApi"]=1
+    operations["getCashflow"]=1
+    operations["getLiquidity"]=1
+    operations["getOpenInvoicesApi"]=1
+    operations["getVerfahrensdokumentation"]=1
+    operations["runDunningApi"]=1
+    operations["budgetsApi"]=1
+    operations["upsertBudgetGoalApi"]=1
+    operations["createComplianceTraining"]=1
+    operations["deleteComplianceTraining"]=1
+    operations["getComplianceTraining"]=1
+    operations["getComplianceTrainings"]=1
+    operations["updateComplianceTraining"]=1
+    operations["contactSchema"]=1
+    operations["contactTimeline"]=1
+    operations["createContact"]=1
+    operations["deleteContact"]=1
+    operations["getContact"]=1
+    operations["listContacts"]=1
+    operations["salesVolume"]=1
+    operations["updateContact"]=1
+    operations["couponRestore"]=1
+    operations["createCoupon"]=1
+    operations["deleteCoupon"]=1
+    operations["getCoupon"]=1
+    operations["listCoupons"]=1
+    operations["updateCoupon"]=1
+    operations["createSepaDirectDebitApi"]=1
+    operations["createCreditNote"]=1
+    operations["downloadCreditNotePdf"]=1
+    operations["getCreditNote"]=1
+    operations["listCreditNotes"]=1
+    operations["createCustomer"]=1
+    operations["customerRestore"]=1
+    operations["deleteCustomer"]=1
+    operations["getCustomer"]=1
+    operations["getCustomers"]=1
+    operations["updateCustomer"]=1
+    operations["createCommunication"]=1
+    operations["customercommunicationRestore"]=1
+    operations["deleteCommunication"]=1
+    operations["getCommunication"]=1
+    operations["getContactHistory"]=1
+    operations["listCommunications"]=1
+    operations["updateCommunication"]=1
+    operations["addGroupMembers"]=1
+    operations["createCustomerGroup"]=1
+    operations["deleteCustomerGroup"]=1
+    operations["getCustomerGroup"]=1
+    operations["listCustomerGroups"]=1
+    operations["updateCustomerGroup"]=1
+    operations["datevExportApi"]=1
+    operations["datevPreviewApi"]=1
+    operations["datevImportApi"]=1
+    operations["createDeclaration"]=1
+    operations["declarationRestore"]=1
+    operations["deleteDeclaration"]=1
+    operations["getDeclaration"]=1
+    operations["getDeclarations"]=1
+    operations["updateDeclaration"]=1
+    operations["createDeliveryAppointment"]=1
+    operations["deleteDeliveryAppointment"]=1
+    operations["getDeliveryAppointment"]=1
+    operations["getPublicDeliveryAppointmentStatus"]=1
+    operations["listDeliveryAppointments"]=1
+    operations["requestPublicDeliveryAppointment"]=1
+    operations["updateDeliveryAppointment"]=1
+    operations["updateDeliveryAppointmentStatus"]=1
+    operations["createDeliveryDate"]=1
+    operations["deleteDeliveryDate"]=1
+    operations["getDeliveryDate"]=1
+    operations["getDeliveryPerformance"]=1
+    operations["listDeliveryDates"]=1
+    operations["updateDeliveryDate"]=1
+    operations["updateDeliveryDateStatus"]=1
+    operations["createDeliveryNote"]=1
+    operations["deleteDeliveryNote"]=1
+    operations["deliverynoteRestore"]=1
+    operations["downloadDeliveryNotePdf"]=1
+    operations["getDeliveryNote"]=1
+    operations["listDeliveryNotes"]=1
+    operations["pursueDeliveryNote"]=1
+    operations["downloadDownPaymentInvoicePdf"]=1
+    operations["getDownPaymentInvoice"]=1
+    operations["listDownPaymentInvoices"]=1
+    operations["ebilanzReportApi"]=1
+    operations["ebilanzXbrlExportApi"]=1
+    operations["createEmailTemplate"]=1
+    operations["deleteEmailTemplate"]=1
+    operations["getEmailTemplate"]=1
+    operations["listEmailTemplates"]=1
+    operations["renderEmailTemplate"]=1
+    operations["updateEmailTemplate"]=1
+    operations["createEmissionEntryApi"]=1
+    operations["createEmissionTargetApi"]=1
+    operations["deleteEmissionEntryApi"]=1
+    operations["deleteEmissionTargetApi"]=1
+    operations["emissionsEntriesApi"]=1
+    operations["emissionsExportApi"]=1
+    operations["emissionsFactorsApi"]=1
+    operations["emissionsReportApi"]=1
+    operations["emissionsTargetsApi"]=1
+    operations["createEmployee"]=1
+    operations["deleteEmployee"]=1
+    operations["employeeRestore"]=1
+    operations["getEmployee"]=1
+    operations["getEmployeePayrollSummary"]=1
+    operations["getEmployees"]=1
+    operations["updateEmployee"]=1
+    operations["euerApi"]=1
+    operations["euerKategorienApi"]=1
+    operations["createEventSubscription"]=1
+    operations["deleteEventSubscription"]=1
+    operations["listEventSubscriptions"]=1
+    operations["fristenApi"]=1
+    operations["acceptDpa"]=1
+    operations["accountErasure"]=1
+    operations["erasureContact"]=1
+    operations["exportContactData"]=1
+    operations["exportGdpr"]=1
+    operations["getDpa"]=1
+    operations["generateQrcodeApi"]=1
+    operations["generateXrechnungApi"]=1
+    operations["gewerbesteuerApi"]=1
+    operations["gewinnverwendungApi"]=1
+    operations["gewinnverwendungExportApi"]=1
+    operations["gezApi"]=1
+    operations["buchhalterCsvApi"]=1
+    operations["gobdExportApi"]=1
+    operations["createGoodsReceipt"]=1
+    operations["deleteGoodsReceipt"]=1
+    operations["getGoodsReceipt"]=1
+    operations["listGoodsReceipts"]=1
+    operations["createGroupFigure"]=1
+    operations["deleteGroupFigure"]=1
+    operations["getGroupFigure"]=1
+    operations["getGroupFigures"]=1
+    operations["updateGroupFigure"]=1
+    operations["getImportStatus"]=1
+    operations["startImport"]=1
+    operations["testImportConnection"]=1
+    operations["instituteStatusApi"]=1
+    operations["getInstituteProfile"]=1
+    operations["updateInstituteProfile"]=1
+    operations["createInventoryCount"]=1
+    operations["deleteInventoryCount"]=1
+    operations["generateInventoryCount"]=1
+    operations["getInventoryCount"]=1
+    operations["listInventoryCounts"]=1
+    operations["updateInventoryCount"]=1
+    operations["updateInventoryCountStatus"]=1
+    operations["getInventoryValueApi"]=1
+    operations["recordInventoryValueApi"]=1
+    operations["createInvoice"]=1
+    operations["deleteInvoice"]=1
+    operations["downloadInvoicePdf"]=1
+    operations["getInvoice"]=1
+    operations["getInvoicePdfUrl"]=1
+    operations["getInvoices"]=1
+    operations["invoiceRestore"]=1
+    operations["updateInvoice"]=1
+    operations["applyPublic"]=1
+    operations["deleteJobApplication"]=1
+    operations["downloadCv"]=1
+    operations["getJobApplication"]=1
+    operations["inboundEmail"]=1
+    operations["listJobApplications"]=1
+    operations["listPublicPostings"]=1
+    operations["scoreJobApplication"]=1
+    operations["updateJobApplicationStatus"]=1
+    operations["createJobPosting"]=1
+    operations["deleteJobPosting"]=1
+    operations["getJobPosting"]=1
+    operations["listJobPostings"]=1
+    operations["updateJobPosting"]=1
+    operations["konzernExportApi"]=1
+    operations["konzernStatusApi"]=1
+    operations["kostenVorschauApi"]=1
+    operations["kstApi"]=1
+    operations["createKycRecord"]=1
+    operations["deleteKycRecord"]=1
+    operations["getKycRecord"]=1
+    operations["getKycRecords"]=1
+    operations["updateKycRecord"]=1
+    operations["listLeadsApi"]=1
+    operations["updateLeadApi"]=1
+    operations["getLegalDocuments"]=1
+    operations["resetLegalDocuments"]=1
+    operations["upsertLegalDocuments"]=1
+    operations["listOpenItemsApi"]=1
+    operations["createConnectionApi"]=1
+    operations["deleteConnectionApi"]=1
+    operations["getConnectionApi"]=1
+    operations["getSyncDirectionApi"]=1
+    operations["getSyncLogsApi"]=1
+    operations["listConnectionsApi"]=1
+    operations["listPlatformsApi"]=1
+    operations["oauthAuthorizeApi"]=1
+    operations["oauthCallbackApi"]=1
+    operations["triggerSyncApi"]=1
+    operations["updateConnectionApi"]=1
+    operations["updateSyncDirectionApi"]=1
+    operations["webhookReceiverApi"]=1
+    operations["deleteNotification"]=1
+    operations["listNotifications"]=1
+    operations["markAllRead"]=1
+    operations["markAsRead"]=1
+    operations["unreadCount"]=1
+    operations["offenlegungApi"]=1
+    operations["getSmtpConfigApi"]=1
+    operations["saveSmtpConfigApi"]=1
+    operations["addOrderTags"]=1
+    operations["findOrderByExternalRef"]=1
+    operations["getOrder"]=1
+    operations["getOrders"]=1
+    operations["patchOrder"]=1
+    operations["replaceOrderTags"]=1
+    operations["updateOrderState"]=1
+    operations["createConfirmation"]=1
+    operations["deleteConfirmation"]=1
+    operations["downloadConfirmationPdf"]=1
+    operations["getConfirmation"]=1
+    operations["listConfirmations"]=1
+    operations["orderconfirmationRestore"]=1
+    operations["pursueConfirmation"]=1
+    operations["ossReportApi"]=1
+    operations["completePacking"]=1
+    operations["getPackingQueue"]=1
+    operations["printDeliveryNote"]=1
+    operations["printLabel"]=1
+    operations["recordPackingVideo"]=1
+    operations["createParticipation"]=1
+    operations["deleteParticipation"]=1
+    operations["getParticipation"]=1
+    operations["getParticipations"]=1
+    operations["updateParticipation"]=1
+    operations["paygapAuskunftApi"]=1
+    operations["paygapExportApi"]=1
+    operations["paygapReportApi"]=1
+    operations["createPayment"]=1
+    operations["deletePayment"]=1
+    operations["getPayment"]=1
+    operations["getPayments"]=1
+    operations["paymentRestore"]=1
+    operations["updatePayment"]=1
+    operations["listPaymentConditionsApi"]=1
+    operations["createPaymentGatewayApi"]=1
+    operations["deletePaymentGatewayApi"]=1
+    operations["listPaymentGatewaysApi"]=1
+    operations["oauthAuthorizeApi"]=1
+    operations["oauthCallbackApi"]=1
+    operations["updatePaymentGatewayApi"]=1
+    operations["payrollApprove"]=1
+    operations["payrollAutopay"]=1
+    operations["payrollCalculate"]=1
+    operations["payrollCreate"]=1
+    operations["payrollDelete"]=1
+    operations["payrollElsterExport"]=1
+    operations["payrollEmail"]=1
+    operations["payrollEntryPdf"]=1
+    operations["payrollGet"]=1
+    operations["payrollList"]=1
+    operations["payrollPay"]=1
+    operations["payrollPdf"]=1
+    operations["payrollSummary"]=1
+    operations["payrollSvMeldungen"]=1
+    operations["peppolApi"]=1
+    operations["plausibilityCheckApi"]=1
+    operations["posBilling"]=1
+    operations["posCreateOrder"]=1
+    operations["posCreateRegister"]=1
+    operations["posCreateTable"]=1
+    operations["posDisableRegister"]=1
+    operations["posFreeTable"]=1
+    operations["posKasseClosing"]=1
+    operations["posKasseEntries"]=1
+    operations["posKasseExport"]=1
+    operations["posKassePayInOut"]=1
+    operations["posListOrders"]=1
+    operations["posListProducts"]=1
+    operations["posListRegisters"]=1
+    operations["posListTables"]=1
+    operations["posOrderPrint"]=1
+    operations["posOrderReceipt"]=1
+    operations["posPayOrder"]=1
+    operations["posSumupCheckout"]=1
+    operations["createPostingCategory"]=1
+    operations["deletePostingCategory"]=1
+    operations["listPostingCategories"]=1
+    operations["seedPostingCategories"]=1
+    operations["updatePostingCategory"]=1
+    operations["createPriceTier"]=1
+    operations["deletePriceTier"]=1
+    operations["getPriceTier"]=1
+    operations["getResolvedPrice"]=1
+    operations["listPriceTiers"]=1
+    operations["updatePriceTier"]=1
+    operations["createProductApi"]=1
+    operations["deleteProductApi"]=1
+    operations["getProductApi"]=1
+    operations["getProductStockApi"]=1
+    operations["getProductsApi"]=1
+    operations["listLowStockProductsApi"]=1
+    operations["productRestore"]=1
+    operations["updateProductApi"]=1
+    operations["updateProductStockApi"]=1
+    operations["createProductAttribute"]=1
+    operations["deleteProductAttribute"]=1
+    operations["getProductAttribute"]=1
+    operations["listProductAttributes"]=1
+    operations["updateProductAttribute"]=1
+    operations["createProductCategory"]=1
+    operations["deleteProductCategory"]=1
+    operations["getProductCategory"]=1
+    operations["listProductCategories"]=1
+    operations["updateProductCategory"]=1
+    operations["createProductVariant"]=1
+    operations["deleteProductVariant"]=1
+    operations["generateProductVariants"]=1
+    operations["getProductVariant"]=1
+    operations["listProductVariants"]=1
+    operations["updateProductVariant"]=1
+    operations["createProductionOrder"]=1
+    operations["deleteProductionOrder"]=1
+    operations["getProductionOrder"]=1
+    operations["listProductionOrders"]=1
+    operations["productionOrderCosting"]=1
+    operations["updateProductionOrder"]=1
+    operations["updateProductionOrderStatus"]=1
+    operations["convertProformaToInvoice"]=1
+    operations["createProformaInvoice"]=1
+    operations["deleteProformaInvoice"]=1
+    operations["getProformaInvoice"]=1
+    operations["listProformaInvoices"]=1
+    operations["updateProformaInvoice"]=1
+    operations["proposeAssignmentsApi"]=1
+    operations["getPublicReturnStatus"]=1
+    operations["listPublicReturns"]=1
+    operations["requestPublicReturn"]=1
+    operations["createPurchaseOrder"]=1
+    operations["deletePurchaseOrder"]=1
+    operations["getPurchaseOrder"]=1
+    operations["listPurchaseOrders"]=1
+    operations["matchInvoice"]=1
+    operations["updatePurchaseOrder"]=1
+    operations["updatePurchaseOrderStatus"]=1
+    operations["createQuotation"]=1
+    operations["deleteQuotation"]=1
+    operations["downloadQuotationPdf"]=1
+    operations["getQuotation"]=1
+    operations["listQuotations"]=1
+    operations["pursueQuotation"]=1
+    operations["quotationRestore"]=1
+    operations["updateQuotation"]=1
+    operations["createRecurringTemplate"]=1
+    operations["deleteRecurringTemplate"]=1
+    operations["getRecurringTemplate"]=1
+    operations["listRecurringTemplates"]=1
+    operations["applyReorderProposal"]=1
+    operations["getReorderProposal"]=1
+    operations["applyReplenishments"]=1
+    operations["getReplenishments"]=1
+    operations["bilanzReportApi"]=1
+    operations["guvReportApi"]=1
+    operations["kontenansichtReportApi"]=1
+    operations["umsatzsteuerReportApi"]=1
+    operations["createReturnOrder"]=1
+    operations["deleteReturnOrder"]=1
+    operations["getReturnOrder"]=1
+    operations["listReturnOrders"]=1
+    operations["returnLogisticsQueue"]=1
+    operations["returnLogisticsSummary"]=1
+    operations["updateReturnOrder"]=1
+    operations["updateReturnOrderStatus"]=1
+    operations["convertRfq"]=1
+    operations["createRfq"]=1
+    operations["deleteRfq"]=1
+    operations["getRfq"]=1
+    operations["listRfqs"]=1
+    operations["updateRfq"]=1
+    operations["updateRfqStatus"]=1
+    operations["globalSearch"]=1
+    operations["myPermissions"]=1
+    operations["createServiceAssignment"]=1
+    operations["deleteServiceAssignment"]=1
+    operations["getServiceAssignment"]=1
+    operations["getServiceAssignments"]=1
+    operations["updateServiceAssignment"]=1
+    operations["createServiceJob"]=1
+    operations["deleteServiceJob"]=1
+    operations["getServiceJob"]=1
+    operations["getServiceJobs"]=1
+    operations["updateServiceJob"]=1
+    operations["createShareholder"]=1
+    operations["deleteShareholder"]=1
+    operations["getShareholder"]=1
+    operations["getShareholders"]=1
+    operations["updateShareholder"]=1
+    operations["createShipment"]=1
+    operations["createShipmentFromOrder"]=1
+    operations["deleteShipment"]=1
+    operations["getShipment"]=1
+    operations["listShipments"]=1
+    operations["trackOrderPublic"]=1
+    operations["trackShipmentApi"]=1
+    operations["updateShipmentStatus"]=1
+    operations["getCredentialsApi"]=1
+    operations["getRatesApi"]=1
+    operations["listProvidersApi"]=1
+    operations["saveCredentialsApi"]=1
+    operations["createShippingRule"]=1
+    operations["deleteShippingRule"]=1
+    operations["getShippingRule"]=1
+    operations["listShippingRules"]=1
+    operations["updateShippingRule"]=1
+    operations["createShippingThreshold"]=1
+    operations["deleteShippingThreshold"]=1
+    operations["getDeliverable"]=1
+    operations["getShippingThreshold"]=1
+    operations["listShippingThresholds"]=1
+    operations["updateShippingThreshold"]=1
+    operations["shopEditorSave"]=1
+    operations["createSilentPartner"]=1
+    operations["deleteSilentPartner"]=1
+    operations["getSilentPartner"]=1
+    operations["getSilentPartners"]=1
+    operations["updateSilentPartner"]=1
+    operations["stilleExportApi"]=1
+    operations["stilleReportApi"]=1
+    operations["getStockMovement"]=1
+    operations["listStockMovements"]=1
+    operations["createStockTransfer"]=1
+    operations["deleteStockTransfer"]=1
+    operations["getStockTransfer"]=1
+    operations["listStockTransfers"]=1
+    operations["updateStockTransferStatus"]=1
+    operations["shippingSuitabilityApi"]=1
+    operations["createSupplierCondition"]=1
+    operations["deleteSupplierCondition"]=1
+    operations["getSupplierCondition"]=1
+    operations["listSupplierConditions"]=1
+    operations["updateSupplierCondition"]=1
+    operations["createSupplierInvoice"]=1
+    operations["deleteSupplierInvoice"]=1
+    operations["getSupplierInvoice"]=1
+    operations["listSupplierInvoices"]=1
+    operations["updateSupplierInvoice"]=1
+    operations["updateSupplierInvoiceStatus"]=1
+    operations["createChannelApi"]=1
+    operations["deleteChannelApi"]=1
+    operations["listChannelsApi"]=1
+    operations["updateChannelApi"]=1
+    operations["createTicketApi"]=1
+    operations["deleteTicketApi"]=1
+    operations["getTicketApi"]=1
+    operations["listTicketsApi"]=1
+    operations["updateTicketApi"]=1
+    operations["createTaxRate"]=1
+    operations["deleteTaxRate"]=1
+    operations["listTaxRates"]=1
+    operations["updateTaxRate"]=1
+    operations["getTenantSettings"]=1
+    operations["updateTenantSettings"]=1
+    operations["listMessagesApi"]=1
+    operations["sendMessageApi"]=1
+    operations["clockInTimeEntry"]=1
+    operations["clockOutTimeEntry"]=1
+    operations["getLaborCosts"]=1
+    operations["listTimeEntries"]=1
+    operations["createTrainingAssignment"]=1
+    operations["deleteTrainingAssignment"]=1
+    operations["getTrainingAssignment"]=1
+    operations["getTrainingAssignments"]=1
+    operations["updateTrainingAssignment"]=1
+    operations["getMyTrainings"]=1
+    operations["getTrainingContent"]=1
+    operations["getTrainingOverview"]=1
+    operations["submitTrainingResult"]=1
+    operations["changePassword"]=1
+    operations["createTeam"]=1
+    operations["generateApiKey"]=1
+    operations["inviteUser"]=1
+    operations["listTeams"]=1
+    operations["removeUserFromOrg"]=1
+    operations["updateProfile"]=1
+    operations["userProfile"]=1
+    operations["userTenants"]=1
+    operations["getUser"]=1
+    operations["listUsers"]=1
+    operations["removeUser"]=1
+    operations["updateUserPermissions"]=1
+    operations["updateUserRole"]=1
+    operations["jahresustApi"]=1
+    operations["ustvaApi"]=1
+    operations["createVoucher"]=1
+    operations["deleteVoucher"]=1
+    operations["getVoucher"]=1
+    operations["listVouchers"]=1
+    operations["updateVoucher"]=1
+    operations["voucherRestore"]=1
+    operations["createWarehouse"]=1
+    operations["deleteWarehouse"]=1
+    operations["getWarehouse"]=1
+    operations["listWarehouses"]=1
+    operations["updateWarehouse"]=1
+    operations["createWarehouseStock"]=1
+    operations["deleteWarehouseStock"]=1
+    operations["listWarehouseStock"]=1
+    operations["updateWarehouseStock"]=1
+    operations["createSubscription"]=1
+    operations["deleteSubscription"]=1
+    operations["emitApi"]=1
+    operations["listEvent"]=1
+    operations["listSubscriptions"]=1
+    operations["updateSubscription"]=1
+    operations["listWorkflowsApi"]=1
+    operations["setWorkflowEnabledApi"]=1
+    operations["generateZugferdApi"]=1
+
+    # An associative array of operations to their parameters
+    # Only include path, query and header parameters
+    declare -A operation_parameters
+    operation_parameters["createAbsence"]=""
+    operation_parameters["deleteAbsence"]="id= "
+    operation_parameters["getAbsence"]="id= "
+    operation_parameters["getAbsences"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateAbsence"]="id= "
+    operation_parameters["createActivity"]=""
+    operation_parameters["deleteActivity"]="activity_id= "
+    operation_parameters["getActivity"]="activity_id= "
+    operation_parameters["listActivities"]="page= pageSize= contactId= activityType= status= assignedTo= overdueOnly= "
+    operation_parameters["updateActivity"]="activity_id= "
+    operation_parameters["updateActivityStatus"]="activity_id= "
+    operation_parameters["triggerMirror"]=""
+    operation_parameters["aiSuggestApi"]=""
+    operation_parameters["createWorkerApi"]=""
+    operation_parameters["listWorkersApi"]=""
+    operation_parameters["runWorkerApi"]="worker_id= "
+    operation_parameters["eksApi"]="year= "
+    operation_parameters["anlageGApi"]="year= "
+    operation_parameters["anlageSApi"]="year= "
+    operation_parameters["attachmentRestore"]="id= "
+    operation_parameters["createAttachment"]=""
+    operation_parameters["deleteAttachment"]="id= "
+    operation_parameters["getAttachment"]="id= "
+    operation_parameters["listAttachments"]="page= pageSize= contactId= "
+    operation_parameters["saveAttachmentOcrText"]="attachment_id= "
+    operation_parameters["createAttachmentVersion"]="attachment_id= "
+    operation_parameters["listAttachmentVersions"]="attachment_id= "
+    operation_parameters["restoreAttachmentVersion"]="attachment_id= version_id= "
+    operation_parameters["acceptInvite"]=""
+    operation_parameters["forgotPassword"]=""
+    operation_parameters["login"]=""
+    operation_parameters["logout"]=""
+    operation_parameters["magicLinkLogin"]=""
+    operation_parameters["magicLinkVerify"]=""
+    operation_parameters["register"]=""
+    operation_parameters["resetPassword"]=""
+    operation_parameters["totpEnable"]=""
+    operation_parameters["totpSetup"]=""
+    operation_parameters["verifyEmail"]=""
+    operation_parameters["listAutomations"]=""
+    operation_parameters["triggerAutomation"]="key= "
+    operation_parameters["updateAutomation"]="key= "
+    operation_parameters["bankLookupApi"]="iban= "
+    operation_parameters["bankTransactionsApi"]=""
+    operation_parameters["hebesatzLookupApi"]="gemeindeschluessel= plz= name= stichtag= country_code= "
+    operation_parameters["getPlans"]=""
+    operation_parameters["getQuotaApi"]=""
+    operation_parameters["getSubscriptionApi"]=""
+    operation_parameters["getUsageApi"]="meter= "
+    operation_parameters["paddleSubscriptionWebhook"]=""
+    operation_parameters["putQuotaApi"]=""
+    operation_parameters["createBom"]=""
+    operation_parameters["deleteBom"]="bom_id= "
+    operation_parameters["getBom"]="bom_id= "
+    operation_parameters["listBoms"]="page= pageSize= search= productId= "
+    operation_parameters["updateBom"]="bom_id= "
+    operation_parameters["allocatePaymentApi"]=""
+    operation_parameters["bwaReportApi"]="year= month= "
+    operation_parameters["elsterStatusApi"]=""
+    operation_parameters["elsterValidateApi"]="zeitraum= "
+    operation_parameters["elsterXmlApi"]="zeitraum= "
+    operation_parameters["getCashflow"]="year= month= "
+    operation_parameters["getLiquidity"]=""
+    operation_parameters["getOpenInvoicesApi"]="customer_id= "
+    operation_parameters["getVerfahrensdokumentation"]=""
+    operation_parameters["runDunningApi"]=""
+    operation_parameters["budgetsApi"]="year= month= "
+    operation_parameters["upsertBudgetGoalApi"]="category= "
+    operation_parameters["createComplianceTraining"]=""
+    operation_parameters["deleteComplianceTraining"]="id= "
+    operation_parameters["getComplianceTraining"]="id= "
+    operation_parameters["getComplianceTrainings"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateComplianceTraining"]="id= "
+    operation_parameters["contactSchema"]=""
+    operation_parameters["contactTimeline"]="contact_id= "
+    operation_parameters["createContact"]=""
+    operation_parameters["deleteContact"]="contact_id= "
+    operation_parameters["getContact"]="contact_id= "
+    operation_parameters["listContacts"]="page= page_size= search= contact_type= tag= "
+    operation_parameters["salesVolume"]="page= page_size= search= contact_type= tag= "
+    operation_parameters["updateContact"]="contact_id= "
+    operation_parameters["couponRestore"]="coupon_id= "
+    operation_parameters["createCoupon"]=""
+    operation_parameters["deleteCoupon"]="coupon_id= "
+    operation_parameters["getCoupon"]="coupon_id= "
+    operation_parameters["listCoupons"]="page= page_size= is_active= code= discount_type= "
+    operation_parameters["updateCoupon"]="coupon_id= "
+    operation_parameters["createSepaDirectDebitApi"]="creditor_name= creditor_iban= creditor_bic= creditor_id= mandate_id= mandate_date= debtor_name= debtor_iban= debtor_bic= amount= collection_date= description= "
+    operation_parameters["createCreditNote"]=""
+    operation_parameters["downloadCreditNotePdf"]="credit_note_id= "
+    operation_parameters["getCreditNote"]="credit_note_id= "
+    operation_parameters["listCreditNotes"]="page= page_size= search= include_deleted= "
+    operation_parameters["createCustomer"]=""
+    operation_parameters["customerRestore"]="customer_id= "
+    operation_parameters["deleteCustomer"]="customer_id= "
+    operation_parameters["getCustomer"]="customer_id= "
+    operation_parameters["getCustomers"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateCustomer"]="customer_id= "
+    operation_parameters["createCommunication"]=""
+    operation_parameters["customercommunicationRestore"]="communication_id= "
+    operation_parameters["deleteCommunication"]="communication_id= "
+    operation_parameters["getCommunication"]="communication_id= "
+    operation_parameters["getContactHistory"]="contact_id= "
+    operation_parameters["listCommunications"]="page= page_size= contact_id= channel= direction= from= to= "
+    operation_parameters["updateCommunication"]="communication_id= "
+    operation_parameters["addGroupMembers"]="customer_group_id= "
+    operation_parameters["createCustomerGroup"]=""
+    operation_parameters["deleteCustomerGroup"]="customer_group_id= "
+    operation_parameters["getCustomerGroup"]="customer_group_id= "
+    operation_parameters["listCustomerGroups"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateCustomerGroup"]="customer_group_id= "
+    operation_parameters["datevExportApi"]="account_schema= date_from= date_to= page= page_size= "
+    operation_parameters["datevPreviewApi"]="account_schema= date_from= date_to= page= page_size= "
+    operation_parameters["datevImportApi"]=""
+    operation_parameters["createDeclaration"]=""
+    operation_parameters["declarationRestore"]="id= "
+    operation_parameters["deleteDeclaration"]="id= "
+    operation_parameters["getDeclaration"]="id= "
+    operation_parameters["getDeclarations"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateDeclaration"]="id= "
+    operation_parameters["createDeliveryAppointment"]=""
+    operation_parameters["deleteDeliveryAppointment"]="appointment_id= "
+    operation_parameters["getDeliveryAppointment"]="appointment_id= "
+    operation_parameters["getPublicDeliveryAppointmentStatus"]="appointmentId= email= token= "
+    operation_parameters["listDeliveryAppointments"]="page= page_size= status= warehouse_id= from= to= "
+    operation_parameters["requestPublicDeliveryAppointment"]=""
+    operation_parameters["updateDeliveryAppointment"]="appointment_id= "
+    operation_parameters["updateDeliveryAppointmentStatus"]="appointment_id= "
+    operation_parameters["createDeliveryDate"]=""
+    operation_parameters["deleteDeliveryDate"]="delivery_date_id= "
+    operation_parameters["getDeliveryDate"]="delivery_date_id= "
+    operation_parameters["getDeliveryPerformance"]="page= pageSize= orderNumber= status= from= to= "
+    operation_parameters["listDeliveryDates"]="page= pageSize= orderNumber= status= from= to= "
+    operation_parameters["updateDeliveryDate"]="delivery_date_id= "
+    operation_parameters["updateDeliveryDateStatus"]="delivery_date_id= "
+    operation_parameters["createDeliveryNote"]=""
+    operation_parameters["deleteDeliveryNote"]="delivery_note_id= "
+    operation_parameters["deliverynoteRestore"]="delivery_note_id= "
+    operation_parameters["downloadDeliveryNotePdf"]="delivery_note_id= "
+    operation_parameters["getDeliveryNote"]="delivery_note_id= "
+    operation_parameters["listDeliveryNotes"]="page= page_size= search= include_deleted= "
+    operation_parameters["pursueDeliveryNote"]="delivery_note_id= "
+    operation_parameters["downloadDownPaymentInvoicePdf"]="id= "
+    operation_parameters["getDownPaymentInvoice"]="id= "
+    operation_parameters["listDownPaymentInvoices"]="page= page_size= search= include_deleted= "
+    operation_parameters["ebilanzReportApi"]="year= date_from= date_to= "
+    operation_parameters["ebilanzXbrlExportApi"]="year= date_from= date_to= "
+    operation_parameters["createEmailTemplate"]=""
+    operation_parameters["deleteEmailTemplate"]="email_template_id= "
+    operation_parameters["getEmailTemplate"]="email_template_id= "
+    operation_parameters["listEmailTemplates"]="page= pageSize= status= search= "
+    operation_parameters["renderEmailTemplate"]="email_template_id= "
+    operation_parameters["updateEmailTemplate"]="email_template_id= "
+    operation_parameters["createEmissionEntryApi"]=""
+    operation_parameters["createEmissionTargetApi"]=""
+    operation_parameters["deleteEmissionEntryApi"]="id= "
+    operation_parameters["deleteEmissionTargetApi"]="id= "
+    operation_parameters["emissionsEntriesApi"]="year= "
+    operation_parameters["emissionsExportApi"]="year= "
+    operation_parameters["emissionsFactorsApi"]=""
+    operation_parameters["emissionsReportApi"]="year= "
+    operation_parameters["emissionsTargetsApi"]=""
+    operation_parameters["createEmployee"]=""
+    operation_parameters["deleteEmployee"]="id= "
+    operation_parameters["employeeRestore"]="id= "
+    operation_parameters["getEmployee"]="id= "
+    operation_parameters["getEmployeePayrollSummary"]="id= year= "
+    operation_parameters["getEmployees"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateEmployee"]="id= "
+    operation_parameters["euerApi"]="year= "
+    operation_parameters["euerKategorienApi"]="year= "
+    operation_parameters["createEventSubscription"]=""
+    operation_parameters["deleteEventSubscription"]="subscription_id= "
+    operation_parameters["listEventSubscriptions"]=""
+    operation_parameters["fristenApi"]="bundesland= voranmeldungsrhythmus= dauerfristverlaengerung= est_aktiv= gewst_aktiv= monate= "
+    operation_parameters["acceptDpa"]=""
+    operation_parameters["accountErasure"]=""
+    operation_parameters["erasureContact"]="contact_id= "
+    operation_parameters["exportContactData"]="contact_id= "
+    operation_parameters["exportGdpr"]=""
+    operation_parameters["getDpa"]=""
+    operation_parameters["generateQrcodeApi"]="id= iban= holder_name= bic= amount= reference= purpose= "
+    operation_parameters["generateXrechnungApi"]="id= supplier_name= supplier_street= supplier_city= supplier_zip= supplier_country= supplier_vat_id= "
+    operation_parameters["gewerbesteuerApi"]="year= hebesatz= gewerbeertrag= country= gemeindeschluessel= "
+    operation_parameters["gewinnverwendungApi"]="year= "
+    operation_parameters["gewinnverwendungExportApi"]="year= "
+    operation_parameters["gezApi"]="jahr= betriebsstaetten= kfz= hotelzimmer= beschaefigte= "
+    operation_parameters["buchhalterCsvApi"]="date_from= date_to= "
+    operation_parameters["gobdExportApi"]="year= format= "
+    operation_parameters["createGoodsReceipt"]=""
+    operation_parameters["deleteGoodsReceipt"]="goods_receipt_id= "
+    operation_parameters["getGoodsReceipt"]="goods_receipt_id= "
+    operation_parameters["listGoodsReceipts"]="page= page_size= purchase_order_id= supplier_name= warehouse_id= "
+    operation_parameters["createGroupFigure"]=""
+    operation_parameters["deleteGroupFigure"]="year= "
+    operation_parameters["getGroupFigure"]="year= "
+    operation_parameters["getGroupFigures"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateGroupFigure"]="year= "
+    operation_parameters["getImportStatus"]="job_id= "
+    operation_parameters["startImport"]=""
+    operation_parameters["testImportConnection"]=""
+    operation_parameters["instituteStatusApi"]=""
+    operation_parameters["getInstituteProfile"]=""
+    operation_parameters["updateInstituteProfile"]=""
+    operation_parameters["createInventoryCount"]=""
+    operation_parameters["deleteInventoryCount"]="inventory_count_id= "
+    operation_parameters["generateInventoryCount"]=""
+    operation_parameters["getInventoryCount"]="inventory_count_id= "
+    operation_parameters["listInventoryCounts"]="page= page_size= status= warehouse_id= "
+    operation_parameters["updateInventoryCount"]="inventory_count_id= "
+    operation_parameters["updateInventoryCountStatus"]="inventory_count_id= "
+    operation_parameters["getInventoryValueApi"]=""
+    operation_parameters["recordInventoryValueApi"]=""
+    operation_parameters["createInvoice"]=""
+    operation_parameters["deleteInvoice"]="id= "
+    operation_parameters["downloadInvoicePdf"]="id= "
+    operation_parameters["getInvoice"]="id= "
+    operation_parameters["getInvoicePdfUrl"]="id= "
+    operation_parameters["getInvoices"]="page= page_size= search= include_deleted= "
+    operation_parameters["invoiceRestore"]="id= "
+    operation_parameters["updateInvoice"]="id= "
+    operation_parameters["applyPublic"]="posting_id= "
+    operation_parameters["deleteJobApplication"]="application_id= "
+    operation_parameters["downloadCv"]="application_id= "
+    operation_parameters["getJobApplication"]="application_id= "
+    operation_parameters["inboundEmail"]=""
+    operation_parameters["listJobApplications"]="postingId= status= page= pageSize= "
+    operation_parameters["listPublicPostings"]=""
+    operation_parameters["scoreJobApplication"]="application_id= "
+    operation_parameters["updateJobApplicationStatus"]="application_id= "
+    operation_parameters["createJobPosting"]=""
+    operation_parameters["deleteJobPosting"]="id= "
+    operation_parameters["getJobPosting"]="id= "
+    operation_parameters["listJobPostings"]="status= page= pageSize= "
+    operation_parameters["updateJobPosting"]="id= "
+    operation_parameters["konzernExportApi"]="year= "
+    operation_parameters["konzernStatusApi"]="year= "
+    operation_parameters["kostenVorschauApi"]="year= month= "
+    operation_parameters["kstApi"]="year= gewinn= "
+    operation_parameters["createKycRecord"]=""
+    operation_parameters["deleteKycRecord"]="id= "
+    operation_parameters["getKycRecord"]="id= "
+    operation_parameters["getKycRecords"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateKycRecord"]="id= "
+    operation_parameters["listLeadsApi"]="status= source= search= page= page_size= "
+    operation_parameters["updateLeadApi"]="lead_id= "
+    operation_parameters["getLegalDocuments"]=""
+    operation_parameters["resetLegalDocuments"]=""
+    operation_parameters["upsertLegalDocuments"]=""
+    operation_parameters["listOpenItemsApi"]="reminder_level1_days= reminder_level2_days= reminder_level3_days= customer_id= "
+    operation_parameters["createConnectionApi"]=""
+    operation_parameters["deleteConnectionApi"]="connection_id= "
+    operation_parameters["getConnectionApi"]="connection_id= "
+    operation_parameters["getSyncDirectionApi"]="connection_id= "
+    operation_parameters["getSyncLogsApi"]="connection_id= "
+    operation_parameters["listConnectionsApi"]=""
+    operation_parameters["listPlatformsApi"]=""
+    operation_parameters["oauthAuthorizeApi"]=""
+    operation_parameters["oauthCallbackApi"]=""
+    operation_parameters["triggerSyncApi"]="connection_id= sync_type= direction= "
+    operation_parameters["updateConnectionApi"]="connection_id= "
+    operation_parameters["updateSyncDirectionApi"]="connection_id= "
+    operation_parameters["webhookReceiverApi"]="platform= connection_id= "
+    operation_parameters["deleteNotification"]="id= "
+    operation_parameters["listNotifications"]=""
+    operation_parameters["markAllRead"]=""
+    operation_parameters["markAsRead"]="id= "
+    operation_parameters["unreadCount"]=""
+    operation_parameters["offenlegungApi"]=""
+    operation_parameters["getSmtpConfigApi"]=""
+    operation_parameters["saveSmtpConfigApi"]=""
+    operation_parameters["addOrderTags"]="order_id= "
+    operation_parameters["findOrderByExternalRef"]="ext_ref= "
+    operation_parameters["getOrder"]="order_number= "
+    operation_parameters["getOrders"]="page= page_size= search= include_deleted= "
+    operation_parameters["patchOrder"]="order_id= "
+    operation_parameters["replaceOrderTags"]="order_id= "
+    operation_parameters["updateOrderState"]="order_id= "
+    operation_parameters["createConfirmation"]=""
+    operation_parameters["deleteConfirmation"]="confirmation_id= "
+    operation_parameters["downloadConfirmationPdf"]="confirmation_id= "
+    operation_parameters["getConfirmation"]="confirmation_id= "
+    operation_parameters["listConfirmations"]="page= page_size= search= include_deleted= "
+    operation_parameters["orderconfirmationRestore"]="confirmation_id= "
+    operation_parameters["pursueConfirmation"]="confirmation_id= "
+    operation_parameters["ossReportApi"]=""
+    operation_parameters["completePacking"]="order_number= "
+    operation_parameters["getPackingQueue"]="page= page_size= search= "
+    operation_parameters["printDeliveryNote"]="order_number= "
+    operation_parameters["printLabel"]="order_number= "
+    operation_parameters["recordPackingVideo"]="order_number= "
+    operation_parameters["createParticipation"]=""
+    operation_parameters["deleteParticipation"]="id= "
+    operation_parameters["getParticipation"]="id= "
+    operation_parameters["getParticipations"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateParticipation"]="id= "
+    operation_parameters["paygapAuskunftApi"]="employee_id= "
+    operation_parameters["paygapExportApi"]=""
+    operation_parameters["paygapReportApi"]=""
+    operation_parameters["createPayment"]=""
+    operation_parameters["deletePayment"]="id= "
+    operation_parameters["getPayment"]="id= "
+    operation_parameters["getPayments"]="page= page_size= search= include_deleted= "
+    operation_parameters["paymentRestore"]="id= "
+    operation_parameters["updatePayment"]="id= "
+    operation_parameters["listPaymentConditionsApi"]=""
+    operation_parameters["createPaymentGatewayApi"]=""
+    operation_parameters["deletePaymentGatewayApi"]="gateway_id= "
+    operation_parameters["listPaymentGatewaysApi"]=""
+    operation_parameters["oauthAuthorizeApi"]=""
+    operation_parameters["oauthCallbackApi"]=""
+    operation_parameters["updatePaymentGatewayApi"]="gateway_id= "
+    operation_parameters["payrollApprove"]="id= "
+    operation_parameters["payrollAutopay"]="id= "
+    operation_parameters["payrollCalculate"]="id= "
+    operation_parameters["payrollCreate"]=""
+    operation_parameters["payrollDelete"]="id= "
+    operation_parameters["payrollElsterExport"]="id= "
+    operation_parameters["payrollEmail"]="id= "
+    operation_parameters["payrollEntryPdf"]="id= entry_id= "
+    operation_parameters["payrollGet"]="id= "
+    operation_parameters["payrollList"]="year= status= "
+    operation_parameters["payrollPay"]="id= "
+    operation_parameters["payrollPdf"]="id= "
+    operation_parameters["payrollSummary"]="year= "
+    operation_parameters["payrollSvMeldungen"]="id= "
+    operation_parameters["peppolApi"]="id= "
+    operation_parameters["plausibilityCheckApi"]="date_from= date_to= "
+    operation_parameters["posBilling"]=""
+    operation_parameters["posCreateOrder"]=""
+    operation_parameters["posCreateRegister"]=""
+    operation_parameters["posCreateTable"]=""
+    operation_parameters["posDisableRegister"]="id= "
+    operation_parameters["posFreeTable"]="id= "
+    operation_parameters["posKasseClosing"]=""
+    operation_parameters["posKasseEntries"]=""
+    operation_parameters["posKasseExport"]=""
+    operation_parameters["posKassePayInOut"]=""
+    operation_parameters["posListOrders"]="status= "
+    operation_parameters["posListProducts"]="q= "
+    operation_parameters["posListRegisters"]=""
+    operation_parameters["posListTables"]=""
+    operation_parameters["posOrderPrint"]="order_number= "
+    operation_parameters["posOrderReceipt"]="order_number= "
+    operation_parameters["posPayOrder"]="order_number= "
+    operation_parameters["posSumupCheckout"]=""
+    operation_parameters["createPostingCategory"]=""
+    operation_parameters["deletePostingCategory"]="category_id= "
+    operation_parameters["listPostingCategories"]=""
+    operation_parameters["seedPostingCategories"]="skr_version= "
+    operation_parameters["updatePostingCategory"]="category_id= "
+    operation_parameters["createPriceTier"]=""
+    operation_parameters["deletePriceTier"]="price_tier_id= "
+    operation_parameters["getPriceTier"]="price_tier_id= "
+    operation_parameters["getResolvedPrice"]="productId= quantity= contactId= "
+    operation_parameters["listPriceTiers"]="page= page_size= product_id= customer_group_id= "
+    operation_parameters["updatePriceTier"]="price_tier_id= "
+    operation_parameters["createProductApi"]=""
+    operation_parameters["deleteProductApi"]="product_id= "
+    operation_parameters["getProductApi"]="product_id= "
+    operation_parameters["getProductStockApi"]="product_id= "
+    operation_parameters["getProductsApi"]="page= page_size= search= include_deleted= "
+    operation_parameters["listLowStockProductsApi"]="threshold= "
+    operation_parameters["productRestore"]="product_id= "
+    operation_parameters["updateProductApi"]="product_id= "
+    operation_parameters["updateProductStockApi"]="product_id= "
+    operation_parameters["createProductAttribute"]=""
+    operation_parameters["deleteProductAttribute"]="attribute_id= "
+    operation_parameters["getProductAttribute"]="attribute_id= "
+    operation_parameters["listProductAttributes"]="page= page_size= product_id= is_filterable= search= "
+    operation_parameters["updateProductAttribute"]="attribute_id= "
+    operation_parameters["createProductCategory"]=""
+    operation_parameters["deleteProductCategory"]="category_id= "
+    operation_parameters["getProductCategory"]="category_id= "
+    operation_parameters["listProductCategories"]=""
+    operation_parameters["updateProductCategory"]="category_id= "
+    operation_parameters["createProductVariant"]=""
+    operation_parameters["deleteProductVariant"]="variant_id= "
+    operation_parameters["generateProductVariants"]=""
+    operation_parameters["getProductVariant"]="variant_id= "
+    operation_parameters["listProductVariants"]="page= page_size= product_id= is_active= "
+    operation_parameters["updateProductVariant"]="variant_id= "
+    operation_parameters["createProductionOrder"]=""
+    operation_parameters["deleteProductionOrder"]="production_order_id= "
+    operation_parameters["getProductionOrder"]="production_order_id= "
+    operation_parameters["listProductionOrders"]="page= pageSize= search= status= "
+    operation_parameters["productionOrderCosting"]="production_order_id= "
+    operation_parameters["updateProductionOrder"]="production_order_id= "
+    operation_parameters["updateProductionOrderStatus"]="production_order_id= "
+    operation_parameters["convertProformaToInvoice"]="proforma_id= "
+    operation_parameters["createProformaInvoice"]=""
+    operation_parameters["deleteProformaInvoice"]="proforma_id= "
+    operation_parameters["getProformaInvoice"]="proforma_id= "
+    operation_parameters["listProformaInvoices"]="page= page_size= status= customer_id= order_number= "
+    operation_parameters["updateProformaInvoice"]="proforma_id= "
+    operation_parameters["proposeAssignmentsApi"]="min_confidence= customer_id= "
+    operation_parameters["getPublicReturnStatus"]="returnNumber= returnOrderId= email= orderNumber= "
+    operation_parameters["listPublicReturns"]="orderNumber= email= "
+    operation_parameters["requestPublicReturn"]=""
+    operation_parameters["createPurchaseOrder"]=""
+    operation_parameters["deletePurchaseOrder"]="purchase_order_id= "
+    operation_parameters["getPurchaseOrder"]="purchase_order_id= "
+    operation_parameters["listPurchaseOrders"]="page= page_size= status= supplier_name= search= "
+    operation_parameters["matchInvoice"]="purchase_order_id= "
+    operation_parameters["updatePurchaseOrder"]="purchase_order_id= "
+    operation_parameters["updatePurchaseOrderStatus"]="purchase_order_id= "
+    operation_parameters["createQuotation"]=""
+    operation_parameters["deleteQuotation"]="quotation_id= "
+    operation_parameters["downloadQuotationPdf"]="quotation_id= "
+    operation_parameters["getQuotation"]="quotation_id= "
+    operation_parameters["listQuotations"]="page= page_size= search= include_deleted= "
+    operation_parameters["pursueQuotation"]="quotation_id= "
+    operation_parameters["quotationRestore"]="quotation_id= "
+    operation_parameters["updateQuotation"]="quotation_id= "
+    operation_parameters["createRecurringTemplate"]=""
+    operation_parameters["deleteRecurringTemplate"]="template_id= "
+    operation_parameters["getRecurringTemplate"]="template_id= "
+    operation_parameters["listRecurringTemplates"]=""
+    operation_parameters["applyReorderProposal"]="configuredOnly= warehouseId= "
+    operation_parameters["getReorderProposal"]="configuredOnly= warehouseId= "
+    operation_parameters["applyReplenishments"]="targetWarehouseId= sourceWarehouseId= "
+    operation_parameters["getReplenishments"]="targetWarehouseId= sourceWarehouseId= "
+    operation_parameters["bilanzReportApi"]="year= month= date_from= date_to= page= page_size= "
+    operation_parameters["guvReportApi"]="year= month= date_from= date_to= page= page_size= "
+    operation_parameters["kontenansichtReportApi"]="year= month= date_from= date_to= page= page_size= "
+    operation_parameters["umsatzsteuerReportApi"]="year= month= date_from= date_to= page= page_size= "
+    operation_parameters["createReturnOrder"]=""
+    operation_parameters["deleteReturnOrder"]="return_order_id= "
+    operation_parameters["getReturnOrder"]="return_order_id= "
+    operation_parameters["listReturnOrders"]="page= page_size= status= customer_name= order_number= "
+    operation_parameters["returnLogisticsQueue"]=""
+    operation_parameters["returnLogisticsSummary"]=""
+    operation_parameters["updateReturnOrder"]="return_order_id= "
+    operation_parameters["updateReturnOrderStatus"]="return_order_id= "
+    operation_parameters["convertRfq"]="rfq_id= "
+    operation_parameters["createRfq"]=""
+    operation_parameters["deleteRfq"]="rfq_id= "
+    operation_parameters["getRfq"]="rfq_id= "
+    operation_parameters["listRfqs"]="page= page_size= status= supplier_name= "
+    operation_parameters["updateRfq"]="rfq_id= "
+    operation_parameters["updateRfqStatus"]="rfq_id= "
+    operation_parameters["globalSearch"]="q= "
+    operation_parameters["myPermissions"]=""
+    operation_parameters["createServiceAssignment"]=""
+    operation_parameters["deleteServiceAssignment"]="id= "
+    operation_parameters["getServiceAssignment"]="id= "
+    operation_parameters["getServiceAssignments"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateServiceAssignment"]="id= "
+    operation_parameters["createServiceJob"]=""
+    operation_parameters["deleteServiceJob"]="id= "
+    operation_parameters["getServiceJob"]="id= "
+    operation_parameters["getServiceJobs"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateServiceJob"]="id= "
+    operation_parameters["createShareholder"]=""
+    operation_parameters["deleteShareholder"]="id= "
+    operation_parameters["getShareholder"]="id= "
+    operation_parameters["getShareholders"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateShareholder"]="id= "
+    operation_parameters["createShipment"]=""
+    operation_parameters["createShipmentFromOrder"]="order_number= "
+    operation_parameters["deleteShipment"]="shipment_id= "
+    operation_parameters["getShipment"]="shipment_id= "
+    operation_parameters["listShipments"]="page= page_size= search= include_deleted= "
+    operation_parameters["trackOrderPublic"]=""
+    operation_parameters["trackShipmentApi"]="shipment_id= "
+    operation_parameters["updateShipmentStatus"]="shipment_id= "
+    operation_parameters["getCredentialsApi"]=""
+    operation_parameters["getRatesApi"]=""
+    operation_parameters["listProvidersApi"]=""
+    operation_parameters["saveCredentialsApi"]=""
+    operation_parameters["createShippingRule"]=""
+    operation_parameters["deleteShippingRule"]="rule_id= "
+    operation_parameters["getShippingRule"]="rule_id= "
+    operation_parameters["listShippingRules"]="page= page_size= country= "
+    operation_parameters["updateShippingRule"]="rule_id= "
+    operation_parameters["createShippingThreshold"]=""
+    operation_parameters["deleteShippingThreshold"]="threshold_id= "
+    operation_parameters["getDeliverable"]="productId= warehouseId= "
+    operation_parameters["getShippingThreshold"]="threshold_id= "
+    operation_parameters["listShippingThresholds"]="page= page_size= product_id= warehouse_id= is_active= "
+    operation_parameters["updateShippingThreshold"]="threshold_id= "
+    operation_parameters["shopEditorSave"]=""
+    operation_parameters["createSilentPartner"]=""
+    operation_parameters["deleteSilentPartner"]="id= "
+    operation_parameters["getSilentPartner"]="id= "
+    operation_parameters["getSilentPartners"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateSilentPartner"]="id= "
+    operation_parameters["stilleExportApi"]="year= "
+    operation_parameters["stilleReportApi"]="year= "
+    operation_parameters["getStockMovement"]="movement_id= "
+    operation_parameters["listStockMovements"]="page= pageSize= productId= warehouseId= movementType= from= to= "
+    operation_parameters["createStockTransfer"]=""
+    operation_parameters["deleteStockTransfer"]="stock_transfer_id= "
+    operation_parameters["getStockTransfer"]="stock_transfer_id= "
+    operation_parameters["listStockTransfers"]="page= page_size= status= warehouse_id= "
+    operation_parameters["updateStockTransferStatus"]="stock_transfer_id= "
+    operation_parameters["shippingSuitabilityApi"]=""
+    operation_parameters["createSupplierCondition"]=""
+    operation_parameters["deleteSupplierCondition"]="supplier_condition_id= "
+    operation_parameters["getSupplierCondition"]="supplier_condition_id= "
+    operation_parameters["listSupplierConditions"]="page= page_size= supplier_contact_id= search= "
+    operation_parameters["updateSupplierCondition"]="supplier_condition_id= "
+    operation_parameters["createSupplierInvoice"]=""
+    operation_parameters["deleteSupplierInvoice"]="supplier_invoice_id= "
+    operation_parameters["getSupplierInvoice"]="supplier_invoice_id= "
+    operation_parameters["listSupplierInvoices"]="page= page_size= status= purchase_order_id= supplier_name= "
+    operation_parameters["updateSupplierInvoice"]="supplier_invoice_id= "
+    operation_parameters["updateSupplierInvoiceStatus"]="supplier_invoice_id= "
+    operation_parameters["createChannelApi"]=""
+    operation_parameters["deleteChannelApi"]="channel_id= "
+    operation_parameters["listChannelsApi"]=""
+    operation_parameters["updateChannelApi"]="channel_id= "
+    operation_parameters["createTicketApi"]=""
+    operation_parameters["deleteTicketApi"]="ticket_id= "
+    operation_parameters["getTicketApi"]="ticket_id= "
+    operation_parameters["listTicketsApi"]="status= priority= assigned_to= channel_type= customer_id= search= page= page_size= "
+    operation_parameters["updateTicketApi"]="ticket_id= "
+    operation_parameters["createTaxRate"]=""
+    operation_parameters["deleteTaxRate"]="id= "
+    operation_parameters["listTaxRates"]=""
+    operation_parameters["updateTaxRate"]="id= "
+    operation_parameters["getTenantSettings"]=""
+    operation_parameters["updateTenantSettings"]=""
+    operation_parameters["listMessagesApi"]="ticket_id= "
+    operation_parameters["sendMessageApi"]="ticket_id= "
+    operation_parameters["clockInTimeEntry"]=""
+    operation_parameters["clockOutTimeEntry"]="id= "
+    operation_parameters["getLaborCosts"]="from= to= group_by= "
+    operation_parameters["listTimeEntries"]="from= to= active= employee_id= "
+    operation_parameters["createTrainingAssignment"]=""
+    operation_parameters["deleteTrainingAssignment"]="id= "
+    operation_parameters["getTrainingAssignment"]="id= "
+    operation_parameters["getTrainingAssignments"]="page= page_size= search= include_deleted= "
+    operation_parameters["updateTrainingAssignment"]="id= "
+    operation_parameters["getMyTrainings"]=""
+    operation_parameters["getTrainingContent"]="code= "
+    operation_parameters["getTrainingOverview"]=""
+    operation_parameters["submitTrainingResult"]=""
+    operation_parameters["changePassword"]=""
+    operation_parameters["createTeam"]=""
+    operation_parameters["generateApiKey"]=""
+    operation_parameters["inviteUser"]=""
+    operation_parameters["listTeams"]=""
+    operation_parameters["removeUserFromOrg"]=""
+    operation_parameters["updateProfile"]=""
+    operation_parameters["userProfile"]=""
+    operation_parameters["userTenants"]=""
+    operation_parameters["getUser"]="user_id= "
+    operation_parameters["listUsers"]=""
+    operation_parameters["removeUser"]="user_id= "
+    operation_parameters["updateUserPermissions"]="user_id= "
+    operation_parameters["updateUserRole"]="user_id= "
+    operation_parameters["jahresustApi"]="year= "
+    operation_parameters["ustvaApi"]="zeitraum= "
+    operation_parameters["createVoucher"]=""
+    operation_parameters["deleteVoucher"]="voucher_id= "
+    operation_parameters["getVoucher"]="voucher_id= "
+    operation_parameters["listVouchers"]="page= page_size= voucher_type= voucher_status= contact_name= date_from= date_to= "
+    operation_parameters["updateVoucher"]="voucher_id= "
+    operation_parameters["voucherRestore"]="voucher_id= "
+    operation_parameters["createWarehouse"]=""
+    operation_parameters["deleteWarehouse"]="warehouse_id= "
+    operation_parameters["getWarehouse"]="warehouse_id= "
+    operation_parameters["listWarehouses"]="page= page_size= search= is_active= "
+    operation_parameters["updateWarehouse"]="warehouse_id= "
+    operation_parameters["createWarehouseStock"]="warehouse_id= "
+    operation_parameters["deleteWarehouseStock"]="warehouse_id= product_id= "
+    operation_parameters["listWarehouseStock"]="warehouse_id= "
+    operation_parameters["updateWarehouseStock"]="warehouse_id= product_id= "
+    operation_parameters["createSubscription"]=""
+    operation_parameters["deleteSubscription"]="subscription_id= "
+    operation_parameters["emitApi"]=""
+    operation_parameters["listEvent"]=""
+    operation_parameters["listSubscriptions"]=""
+    operation_parameters["updateSubscription"]="subscription_id= "
+    operation_parameters["listWorkflowsApi"]=""
+    operation_parameters["setWorkflowEnabledApi"]="workflow_id= "
+    operation_parameters["generateZugferdApi"]="id= supplier_name= supplier_street= supplier_city= supplier_zip= supplier_country= supplier_vat_id= "
+
+    # An associative array of possible values for enum parameters
+    declare -A operation_parameters_enum_values
+    operation_parameters_enum_values["getAbsences::include_deleted"]="true false"
+    operation_parameters_enum_values["getAbsences::include_deleted"]="true false"
+    operation_parameters_enum_values["getAbsences::include_deleted"]="true false"
+    operation_parameters_enum_values["getAbsences::include_deleted"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["listActivities::overdueOnly"]="true false"
+    operation_parameters_enum_values["getComplianceTrainings::include_deleted"]="true false"
+    operation_parameters_enum_values["getComplianceTrainings::include_deleted"]="true false"
+    operation_parameters_enum_values["getComplianceTrainings::include_deleted"]="true false"
+    operation_parameters_enum_values["getComplianceTrainings::include_deleted"]="true false"
+    operation_parameters_enum_values["listCoupons::is_active"]="true false"
+    operation_parameters_enum_values["listCoupons::is_active"]="true false"
+    operation_parameters_enum_values["listCoupons::is_active"]="true false"
+    operation_parameters_enum_values["listCoupons::is_active"]="true false"
+    operation_parameters_enum_values["listCoupons::is_active"]="true false"
+    operation_parameters_enum_values["listCreditNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listCreditNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listCreditNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listCreditNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["getCustomers::include_deleted"]="true false"
+    operation_parameters_enum_values["getCustomers::include_deleted"]="true false"
+    operation_parameters_enum_values["getCustomers::include_deleted"]="true false"
+    operation_parameters_enum_values["getCustomers::include_deleted"]="true false"
+    operation_parameters_enum_values["listCustomerGroups::include_deleted"]="true false"
+    operation_parameters_enum_values["listCustomerGroups::include_deleted"]="true false"
+    operation_parameters_enum_values["listCustomerGroups::include_deleted"]="true false"
+    operation_parameters_enum_values["listCustomerGroups::include_deleted"]="true false"
+    operation_parameters_enum_values["getDeclarations::include_deleted"]="true false"
+    operation_parameters_enum_values["getDeclarations::include_deleted"]="true false"
+    operation_parameters_enum_values["getDeclarations::include_deleted"]="true false"
+    operation_parameters_enum_values["getDeclarations::include_deleted"]="true false"
+    operation_parameters_enum_values["listDeliveryNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listDeliveryNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listDeliveryNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listDeliveryNotes::include_deleted"]="true false"
+    operation_parameters_enum_values["listDownPaymentInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["listDownPaymentInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["listDownPaymentInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["listDownPaymentInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["getEmployees::include_deleted"]="true false"
+    operation_parameters_enum_values["getEmployees::include_deleted"]="true false"
+    operation_parameters_enum_values["getEmployees::include_deleted"]="true false"
+    operation_parameters_enum_values["getEmployees::include_deleted"]="true false"
+    operation_parameters_enum_values["fristenApi::dauerfristverlaengerung"]="true false"
+    operation_parameters_enum_values["fristenApi::est_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::gewst_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::dauerfristverlaengerung"]="true false"
+    operation_parameters_enum_values["fristenApi::est_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::gewst_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::dauerfristverlaengerung"]="true false"
+    operation_parameters_enum_values["fristenApi::est_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::gewst_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::dauerfristverlaengerung"]="true false"
+    operation_parameters_enum_values["fristenApi::est_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::gewst_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::dauerfristverlaengerung"]="true false"
+    operation_parameters_enum_values["fristenApi::est_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::gewst_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::dauerfristverlaengerung"]="true false"
+    operation_parameters_enum_values["fristenApi::est_aktiv"]="true false"
+    operation_parameters_enum_values["fristenApi::gewst_aktiv"]="true false"
+    operation_parameters_enum_values["getGroupFigures::include_deleted"]="true false"
+    operation_parameters_enum_values["getGroupFigures::include_deleted"]="true false"
+    operation_parameters_enum_values["getGroupFigures::include_deleted"]="true false"
+    operation_parameters_enum_values["getGroupFigures::include_deleted"]="true false"
+    operation_parameters_enum_values["getInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["getInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["getInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["getInvoices::include_deleted"]="true false"
+    operation_parameters_enum_values["getKycRecords::include_deleted"]="true false"
+    operation_parameters_enum_values["getKycRecords::include_deleted"]="true false"
+    operation_parameters_enum_values["getKycRecords::include_deleted"]="true false"
+    operation_parameters_enum_values["getKycRecords::include_deleted"]="true false"
+    operation_parameters_enum_values["getOrders::include_deleted"]="true false"
+    operation_parameters_enum_values["getOrders::include_deleted"]="true false"
+    operation_parameters_enum_values["getOrders::include_deleted"]="true false"
+    operation_parameters_enum_values["getOrders::include_deleted"]="true false"
+    operation_parameters_enum_values["listConfirmations::include_deleted"]="true false"
+    operation_parameters_enum_values["listConfirmations::include_deleted"]="true false"
+    operation_parameters_enum_values["listConfirmations::include_deleted"]="true false"
+    operation_parameters_enum_values["listConfirmations::include_deleted"]="true false"
+    operation_parameters_enum_values["getParticipations::include_deleted"]="true false"
+    operation_parameters_enum_values["getParticipations::include_deleted"]="true false"
+    operation_parameters_enum_values["getParticipations::include_deleted"]="true false"
+    operation_parameters_enum_values["getParticipations::include_deleted"]="true false"
+    operation_parameters_enum_values["getPayments::include_deleted"]="true false"
+    operation_parameters_enum_values["getPayments::include_deleted"]="true false"
+    operation_parameters_enum_values["getPayments::include_deleted"]="true false"
+    operation_parameters_enum_values["getPayments::include_deleted"]="true false"
+    operation_parameters_enum_values["getProductsApi::include_deleted"]="true false"
+    operation_parameters_enum_values["getProductsApi::include_deleted"]="true false"
+    operation_parameters_enum_values["getProductsApi::include_deleted"]="true false"
+    operation_parameters_enum_values["getProductsApi::include_deleted"]="true false"
+    operation_parameters_enum_values["listProductAttributes::is_filterable"]="true false"
+    operation_parameters_enum_values["listProductAttributes::is_filterable"]="true false"
+    operation_parameters_enum_values["listProductAttributes::is_filterable"]="true false"
+    operation_parameters_enum_values["listProductAttributes::is_filterable"]="true false"
+    operation_parameters_enum_values["listProductAttributes::is_filterable"]="true false"
+    operation_parameters_enum_values["listProductVariants::is_active"]="true false"
+    operation_parameters_enum_values["listProductVariants::is_active"]="true false"
+    operation_parameters_enum_values["listProductVariants::is_active"]="true false"
+    operation_parameters_enum_values["listProductVariants::is_active"]="true false"
+    operation_parameters_enum_values["listQuotations::include_deleted"]="true false"
+    operation_parameters_enum_values["listQuotations::include_deleted"]="true false"
+    operation_parameters_enum_values["listQuotations::include_deleted"]="true false"
+    operation_parameters_enum_values["listQuotations::include_deleted"]="true false"
+    operation_parameters_enum_values["applyReorderProposal::configuredOnly"]="true false"
+    operation_parameters_enum_values["applyReorderProposal::configuredOnly"]="true false"
+    operation_parameters_enum_values["getReorderProposal::configuredOnly"]="true false"
+    operation_parameters_enum_values["getReorderProposal::configuredOnly"]="true false"
+    operation_parameters_enum_values["getServiceAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceJobs::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceJobs::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceJobs::include_deleted"]="true false"
+    operation_parameters_enum_values["getServiceJobs::include_deleted"]="true false"
+    operation_parameters_enum_values["getShareholders::include_deleted"]="true false"
+    operation_parameters_enum_values["getShareholders::include_deleted"]="true false"
+    operation_parameters_enum_values["getShareholders::include_deleted"]="true false"
+    operation_parameters_enum_values["getShareholders::include_deleted"]="true false"
+    operation_parameters_enum_values["listShipments::include_deleted"]="true false"
+    operation_parameters_enum_values["listShipments::include_deleted"]="true false"
+    operation_parameters_enum_values["listShipments::include_deleted"]="true false"
+    operation_parameters_enum_values["listShipments::include_deleted"]="true false"
+    operation_parameters_enum_values["listShippingThresholds::is_active"]="true false"
+    operation_parameters_enum_values["listShippingThresholds::is_active"]="true false"
+    operation_parameters_enum_values["listShippingThresholds::is_active"]="true false"
+    operation_parameters_enum_values["listShippingThresholds::is_active"]="true false"
+    operation_parameters_enum_values["listShippingThresholds::is_active"]="true false"
+    operation_parameters_enum_values["getSilentPartners::include_deleted"]="true false"
+    operation_parameters_enum_values["getSilentPartners::include_deleted"]="true false"
+    operation_parameters_enum_values["getSilentPartners::include_deleted"]="true false"
+    operation_parameters_enum_values["getSilentPartners::include_deleted"]="true false"
+    operation_parameters_enum_values["listTimeEntries::active"]="true false"
+    operation_parameters_enum_values["listTimeEntries::active"]="true false"
+    operation_parameters_enum_values["listTimeEntries::active"]="true false"
+    operation_parameters_enum_values["listTimeEntries::active"]="true false"
+    operation_parameters_enum_values["getTrainingAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getTrainingAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getTrainingAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["getTrainingAssignments::include_deleted"]="true false"
+    operation_parameters_enum_values["listWarehouses::is_active"]="true false"
+    operation_parameters_enum_values["listWarehouses::is_active"]="true false"
+    operation_parameters_enum_values["listWarehouses::is_active"]="true false"
+    operation_parameters_enum_values["listWarehouses::is_active"]="true false"
+
+    #
+    # Check if this is OSX and use special __osx_init_completion function
+    #
+    if [[ `uname` =~ "Darwin" ]]; then
+        __osx_init_completion || return
+    else
+        _init_completion -s || return
+    fi
+
+
+    # Check if operation is already in the command line provided
+    for word in "${words[@]}"; do
+        if [[ -n $word && ${operations[$word]} ]]; then
+            operation="${word}"
+        fi
+    done
+
+    if [[ -z $operation ]]; then
+        case $prev in
+            --ciphers|--connect-timeout|-C|--continue-at|-F|--form|--form-string|\
+            --ftp-account|--ftp-alternative-to-user|-P|--ftp-port|-H|--header|-h|\
+            --help|--hostpubmd5|--keepalive-time|--krb|--limit-rate|--local-port|\
+            --mail-from|--mail-rcpt|--max-filesize|--max-redirs|-m|--max-time|\
+            --pass|--proto|--proto-redir|--proxy-user|--proxy1.0|-Q|--quote|-r|\
+            --range|-X|--request|--retry|--retry-delay|--retry-max-time|\
+            --socks5-gssapi-service|-t|--telnet-option|--tftp-blksize|-z|\
+            --time-cond|--url|-u|--user|-A|--user-agent|-V|--version|-w|\
+            --write-out|--resolve|--tlsuser|--tlspassword|--about)
+                return
+                ;;
+            -K|--config|-b|--cookie|-c|--cookie-jar|-D|--dump-header|--egd-file|\
+            --key|--libcurl|-o|--output|--random-file|-T|--upload-file|--trace|\
+            --trace-ascii|--netrc-file)
+                _filedir
+                return
+                ;;
+            --cacert|-E|--cert)
+                _filedir '@(c?(e)rt|cer|pem|der)'
+                return
+                ;;
+            --capath)
+                _filedir -d
+                return
+                ;;
+            --cert-type|--key-type)
+                COMPREPLY=( $( compgen -W 'DER PEM ENG' -- "$cur" ) )
+                return
+                ;;
+            --crlfile)
+                _filedir crl
+                return
+                ;;
+            -d|--data|--data-ascii|--data-binary|--data-urlencode)
+                if [[ $cur == \@* ]]; then
+                    cur=${cur:1}
+                    _filedir
+                    COMPREPLY=( "${COMPREPLY[@]/#/@}" )
+                fi
+                return
+                ;;
+            --delegation)
+                COMPREPLY=( $( compgen -W 'none policy always' -- "$cur" ) )
+                return
+                ;;
+            --engine)
+                COMPREPLY=( $( compgen -W 'list' -- "$cur" ) )
+                return
+                ;;
+            --ftp-method)
+                COMPREPLY=( $( compgen -W 'multicwd nocwd singlecwd' -- "$cur" ) )
+                return
+                ;;
+            --ftp-ssl-ccc-mode)
+                COMPREPLY=( $( compgen -W 'active passive' -- "$cur" ) )
+                return
+                ;;
+            --interface)
+                _available_interfaces -a
+                return
+                ;;
+            -x|--proxy|--socks4|--socks4a|--socks5|--socks5-hostname)
+                _known_hosts_real
+                return
+                ;;
+            --pubkey)
+                _filedir pub
+                return
+                ;;
+            --stderr)
+                COMPREPLY=( $( compgen -W '-' -- "$cur" ) )
+                _filedir
+                return
+                ;;
+            --tlsauthtype)
+                COMPREPLY=( $( compgen -W 'SRP' -- "$cur" ) )
+                return
+                ;;
+            --host)
+                COMPREPLY=( $( compgen -W 'http:// https://' -- "$cur" ) )
+                return
+                ;;
+            -ct|--content-type|-ac|--accept)
+                COMPREPLY=( $( compgen -W '${!mime_type_abbreviations[*]}' -- "$cur" ) )
+                return
+                ;;
+        esac
+    fi
+
+    #
+    # Complete the server address based on ~/.ssh/known_hosts
+    # and ~/.ssh/config
+    #
+    local prefix=${COMP_WORDS[COMP_CWORD-2]}
+    local colon=${COMP_WORDS[COMP_CWORD-1]}
+    if [[ "$colon" == ":" && ( $prefix == "https" || $prefix == "http" ) ]]; then
+        COMPREPLY=()
+        local comp_ssh_hosts=`[[ -f ~/.ssh/known_hosts ]] && \
+                              ( cat ~/.ssh/known_hosts | \
+                              grep '^[a-zA-Z0-9]' | \
+                              cut -f 1 -d ' ' | \
+                              sed -e s/,.*//g | \
+                              grep -v ^# | \
+                              uniq | \
+                              grep -v "\[" ) ;
+                              [[ -f ~/.ssh/config ]] && \
+                              ( cat ~/.ssh/config | \
+                              grep "^Host " | \
+                              awk '{print $2}' )`
+        COMPREPLY=( $( compgen -P '//' -W '${comp_ssh_hosts}' -- "${cur:2}") )
+        return
+    fi
+
+    #
+    # Complete the  and cURL's arguments
+    #
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $( compgen -W '$(_parse_help curl) $(_parse_help $1)' -- "$cur" ) )
+        return
+    fi
+
+    #
+    # If the argument starts with a letter this could be either an operation
+    # or an operation parameter
+    # When $cur is empty, suggest the list of operations by default
+    #
+    if [[ $cur =~ ^[A-Za-z_0-9]* ]]; then
+        # If operation has not been yet selected, suggest the list of operations
+        # otherwise suggest arguments of this operation as declared in the
+        # OpenAPI specification
+        if [[ -z $operation ]]; then
+            COMPREPLY=( $(compgen -W '${!operations[*]}' -- ${cur}) )
+        else
+            COMPREPLY=( $(compgen -W '${operation_parameters[$operation]}' -- ${cur}) )
+            compopt -o nospace
+        fi
+        return
+    fi
+
+} &&
+complete -F _ 
+
+# ex: ts=4 sw=4 et filetype=sh
